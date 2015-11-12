@@ -1,0 +1,6 @@
+manager\KlientManager.class
+manager\BiletManager.class
+manager\SprzedazManager.class
+main\Klient.class
+main\Bilet.class
+main\Sprzedaz.class

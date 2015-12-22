@@ -1,21 +1,52 @@
+# -*- coding: utf-8 -*-
 import numpy
 
 ALPHA = 2.926271062443501
 
 
 def function_value(x):
+    """
+    Oblicza wartość funkcji x+log(x)-4 dla podanej wartości x. Zwraca NaN dla ujemnych argumentów,
+    ponieważ logarytm liczby ujemnej nie jest liczbą rzeczywistą.
 
+    :arg x : float
+    :rtype : float - wartość funkcji x+log(x)-4
+    """
     return x + numpy.log(x) - 4
 
-def derivative_function_value(x):
 
+def derivative_function_value(x):
+    """
+    Oblicza wartość pochodnej funkcji x+log(x)-4 dla podanej wartości x.
+    Pochodna jest określona wzorem 1+(1/x).
+
+    :arg x : float
+    :rtype : float - wartość funkcji 1+(1/x)
+    """
     return 1 + (1/x)
 
-def simple_iteration(x):
 
+def simple_iteration(x):
+    """
+    Oblicza wartość funkcji punktu stałego (4-log(x)). Zwraca NaN dla ujemnych argumentów,
+    ponieważ logarytm liczby ujemnej nie jest liczbą rzeczywistą.
+
+    :arg x : float
+    :rtype : float = wartośc funkcji 4-log(x)
+    """
     return 4 - numpy.log(x)
 
+
 def calculate_simple_iterations(x, iterations_limit=10, precision=0.0):
+    """
+    Wykonuje metodę iteracji prostych.
+    Ilość iteracji jest określona przez argument iterations_limit.
+
+    :arg x : float
+    :arg iterations_limit : int
+    :arg precision : float
+    :rtype : float - przybliżona wartość miejsca zerowego
+    """
 
     start_point = x
     result = None
@@ -34,13 +65,31 @@ def calculate_simple_iterations(x, iterations_limit=10, precision=0.0):
     print("Błąd metody: {0}".format(numpy.fabs(result-ALPHA)))
     return result
 
-def secant_method(x0, x1):
 
+def secant_method(x0, x1):
+    """
+    Wykonuje metodę siecznych dla podanych punktów początkowych x0 i x1.
+
+    :arg x0 : float
+    :arg x1 : float
+    :rtype : float - przybliżona wartość miejsca zerowego
+    """
     return x1 - ((function_value(x1) * (x1 - x0)) / (function_value(x1) - function_value(x0)))
 
-def calculate_secant_iterations(x0, x1, iterations_limit=10, precision=0.0):
 
+def calculate_secant_iterations(x0, x1, iterations_limit=10, precision=0.0):
+    """
+    Wykonuje iterację metody siecznych.
+    Ilość iteracji jest określona przez argument iterations_limit.
+    Argumenty x0 i x1 to punkty startowe metody.
+
+    :arg x0 : float
+    :arg x1 : float
+    :arg iterations_limit : int
+    :rtype : float - przybliżona wartość miejsca zerowego
+    """
     result = None
+    # Zmienna x_k_min_1 reprezentuję wartość x_{k-1}.
     x_k_min_1 = x0
     x_k = x1
     i = 0
@@ -58,11 +107,26 @@ def calculate_secant_iterations(x0, x1, iterations_limit=10, precision=0.0):
     print("Błąd metody: {0}".format(numpy.fabs(result-ALPHA)))
     return result
 
-def tangent_method(x):
 
+def tangent_method(x):
+    """
+    Wykonuję metodę stycznych dla podanego punktu początkowego x.
+
+    :arg x : float
+    :rtype : float - przybliżona wartość miejsca zerowego
+    """
     return x - (function_value(x) / derivative_function_value(x))
 
+
 def calculate_tangent_iterations(x, iterations_limit=10, precision=0.0):
+    """
+    Wykonuje iterację metody stycznych.
+    Ilość iteracji jest określona przez argument iterations_limit.
+
+    :arg x : float - Punkt startowy
+    :arg iterations_limit : int
+    :rtype : float - przybliżona wartość miejsca zerowego
+    """
 
     start_point = x
     result = None
@@ -86,7 +150,13 @@ def calculate_tangent_iterations(x, iterations_limit=10, precision=0.0):
 
 
 def parse_user_provided_float(label, check_x_condition=True, check_iteration_condition=False):
-    
+    """
+    Funkcja pomocnicza wczytującą podawaną przez użytkownika wartość typu float.
+
+    :arg label : string
+    :arg check_x_condition : boolean - sprawdzaj czy podany x spełnia warunek x>0
+    :rtype : float
+    """
     val = None
     while True:
         try:
@@ -113,8 +183,14 @@ def parse_user_provided_float(label, check_x_condition=True, check_iteration_con
 
     return val
 
+
 def parse_user_provided_int(label):
-   
+    """
+    Funkcja pomocnicza wczytującą podawaną przez użytkownika wartość typu int.
+
+    :arg label : string
+    :rtype : int
+    """
     val = None
     while True:
         try:
@@ -150,3 +226,4 @@ if __name__ == '__main__':
 
     print("Wynik metody siecznych {0}".format(calculate_secant_iterations(X0_SECANT, X1_SECANT, ITERATIONS_LIMIT,
                                                                           PRECISION)))
+
